@@ -36,11 +36,34 @@ export default function DrawerContent() {
 
     const handleMoviesPage=async(title)=>{
 
-        const data = null ;
-        if (title.includes('Now Playing')) data = await fetchNowPlayingMovies();
-        if (title.includes('Popular')) data = await fetchPopularMovies();
-        if (title.incluse('Top Rated')) data = await fetchTopRatedMovies();
-        if (title.includes('Upcoming')) data = await fetchUpcomingMovies();
+        if (title.includes('Now Playing')) {
+            const data = await fetchNowPlayingMovies();
+            navigator.navigate("MoviesPage", {
+                title: title,
+                result: data
+            })
+        }
+        if (title.includes('Popular')) {
+            const data = await fetchPopularMovies();
+            navigator.navigate("MoviesPage", {
+            title: title,
+            result: data
+        })
+        }
+        if (title.includes('Top Rated')) {
+            const data = await fetchTopRatedMovies();
+            navigator.navigate("MoviesPage", {
+            title: title,
+            result: data
+        })
+        }
+        if (title.includes('Upcoming')) {
+            const data = await fetchUpcomingMovies();
+            navigator.navigate("MoviesPage", {
+            title: title,
+            result: data
+        })
+        }
         navigator.navigate("MoviesPage", {
             title: title,
             result: data
@@ -51,31 +74,36 @@ export default function DrawerContent() {
 
   return (
     <View className="px-3 mt-6 space-y-3">
-        <TouchableOpacity onPress={()=>navigator.navigate("Home")}>
-            <View className="w-full h-[50px] bg-neutral-700 rounded-lg justify-center pb-1 pl-3">
-                <Text className="text-white text-[18px] ">Home</Text>
+        <View >
+            <Text className="pb-1 px-4 text-white font-bold text-xl">Movies</Text>
+            <View className="space-y-2">
+                <TouchableOpacity onPress={()=>navigator.navigate("Home")}>
+                    <View className="w-full h-[50px] bg-neutral-700 rounded-lg justify-center pb-1 pl-3">
+                        <Text className="text-white text-[18px] ">Home</Text>
+                    </View>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={()=>handleMoviesPage("Now Playing Movies")}>
+                    <View className="w-full h-[50px] bg-neutral-700 rounded-lg justify-center pb-1 pl-3">
+                        <Text className="text-white text-[18px] ">Now Playing Movies</Text>
+                    </View>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={()=>handleMoviesPage("Popular Movies")}>
+                    <View className="w-full h-[50px] bg-neutral-700 rounded-lg justify-center pb-1 pl-3">
+                        <Text className="text-white text-[18px] ">Popular Movies</Text>
+                    </View>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={()=>handleMoviesPage("Top Rated Movies")}>
+                    <View className="w-full h-[50px] bg-neutral-700 rounded-lg justify-center pb-1 pl-3">
+                        <Text className="text-white text-[18px] ">Top Rated Movies</Text>
+                    </View>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={()=>handleMoviesPage("Upcoming Movies")}>
+                    <View className="w-full h-[50px] bg-neutral-700 rounded-lg justify-center pb-1 pl-3">
+                        <Text className="text-white text-[18px] ">Upcoming Movies</Text>
+                    </View>
+                </TouchableOpacity>
             </View>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={()=>handleMoviesPage("Now Playing Movies")}>
-            <View className="w-full h-[50px] bg-neutral-700 rounded-lg justify-center pb-1 pl-3">
-                <Text className="text-white text-[18px] ">Now Playing Movies</Text>
-            </View>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={()=>handleMoviesPage("Popular Movies")}>
-            <View className="w-full h-[50px] bg-neutral-700 rounded-lg justify-center pb-1 pl-3">
-                <Text className="text-white text-[18px] ">Popular Movies</Text>
-            </View>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={()=>handleMoviesPage("Top Rated Movies")}>
-            <View className="w-full h-[50px] bg-neutral-700 rounded-lg justify-center pb-1 pl-3">
-                <Text className="text-white text-[18px] ">Top Rated Movies</Text>
-            </View>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={()=>handleMoviesPage("Upcoming Movies")}>
-            <View className="w-full h-[50px] bg-neutral-700 rounded-lg justify-center pb-1 pl-3">
-                <Text className="text-white text-[18px] ">Upcoming Movies</Text>
-            </View>
-        </TouchableOpacity>
+        </View>
         <View>
             <Text className="pb-1 px-4 text-white font-bold text-xl">Genres</Text>
             <DropDownPicker

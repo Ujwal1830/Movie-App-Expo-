@@ -17,7 +17,7 @@ const {width, height} = Dimensions.get('window');
 const ios = Platform.OS ==  'ios'
 const topMargin = ios? '' : 'mt-3'
 
-export default function MovieScreen() {
+export default function TVScreen() {
 
     let movieName = 'Ant-Man and the Wasp: Quantumania';
 
@@ -25,31 +25,35 @@ export default function MovieScreen() {
     const [isFav, setIsFav] = useState(true);
     const navigator = useNavigation();
     const [cast, setCast] = useState([]);
-    const [similarMovies, setSimilarMovies] = useState([1,2,3,4,5]);
     const [loading, setLoading] = useState(true);
-    const [movie, setMovie] = useState({})
+    const [tv, setTv] = useState({})
+    const [similarTv, setSimilarTv] = useState([]);
 
     useEffect(()=>{
       setTimeout(() => {
-        getMovieDetails(item.id);
-        getMovieCredits(item.id);
-        getSimilarMovies(item.id);
+
+        getTVDetails(item.id);
+        getTVCredits(item.id);
+        getSimilarTv(item.id);
+
+        console.log(item);
       }, 1000);
     }, [item])
 
-    const getMovieDetails=async(id)=>{
-      const data = await fetchMovieDetails(id);
-      if(data) setMovie(data);
+
+    const getTVDetails=async(id)=>{
+      const data = await fetchTVDetails(id);
+      if(data) setTv(data);
       setLoading(false);
     }
-    const getMovieCredits=async(id)=>{
-      const data = await fetchMovieCredits(id);
+    const getTVCredits=async(id)=>{
+      const data = await fetchTVCredits(id);
       if(data && data.cast) setCast(data.cast);
       setLoading(false);
     }
-    const getSimilarMovies = async id=>{
-      const data = await fetchSimilarMovies(id);
-      if(data && data.results) setSimilarMovies(data.results);
+    const getSimilarTv=async(id)=>{
+      const data = await fetchSimilarTV(id);
+      if(data && data.results) setSimilarTv(data.results);
       setLoading(false);
     }
 
@@ -76,7 +80,7 @@ export default function MovieScreen() {
         
             <View>
                 <Image style={{width, height: height*0.7}} 
-                source={{uri: image500(movie.poster_path) || fallbackMoviePoster}} />
+                source={{uri: image500(tv.poster_path) || fallbackMoviePoster}} />
                 <LinearGradient 
                     colors={['transparent', 'rgba(8,8,8, 0.8)', 'rgba(8,8,8, 1)']}
                     style={{width, height: height*0.30}}
@@ -90,13 +94,13 @@ export default function MovieScreen() {
         {/* status, release year, runtime */}
       <View style={{marginTop: -(height*0.09)}} className='space-y-3'>
         <Text className='text-white text-center text-3xl font-bold tracking-wider'>
-            {movie.title}
+            {tv.name}
         </Text>
         
         {
-          movie?.id ? (
+          tv?.id ? (
             <Text className='text-neutral-400 font-semibold text-base text-center'>
-                {movie?.status} • {movie?.release_date?.split('-')[0]} • {movie?.runtime}
+                {tv?.status} • {tv?.first_air_date?.split('-')[0]} • {tv?.number_of_seasons}
             </Text>
           ) : null
         }
@@ -105,8 +109,8 @@ export default function MovieScreen() {
         {/* Genres */}
       <View className='flex-row justify-center mx-4 space-x-2'>
         {
-          movie?.genres?.map((genre,index)=>{
-              let showDot = index+1 != movie.genres.length;
+          tv?.genres?.map((genre,index)=>{
+              let showDot = index+1 != tv.genres.length;
               return (
                   <Text key={index} className="text-neutral-400 font-semibold text-base text-center">
                       {genre?.name} {showDot? "•":null}
@@ -118,14 +122,14 @@ export default function MovieScreen() {
 
         {/* description */}
         <Text className='text-neutral-400 mx-4 -tracking-widest'>
-            {movie?.overview}
+            {tv?.overview}
         </Text>
 
         {/* cast */}
-        {movie?.id && cast.length>0 && <Cast navigator={navigator} cast={cast} /> }
+        {tv?.id && cast.length > 0 && <Cast navigator={navigator} cast={cast} /> }
 
         {/* similar movies list */}
-        {movie?.id && cast.length>0 && <MovieList title={'Similar Movies'} hideSeeAll={true} data={similarMovies} />}
+        {tv?.id && cast.length > 0 && <MovieList title={'Similar TV'} hideSeeAll={true} data={similarTv} />}
       </ScrollView>
     )
   )

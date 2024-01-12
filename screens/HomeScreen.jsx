@@ -9,17 +9,27 @@ import {useNavigation} from '@react-navigation/native';
 import Loading from '../components/Loading'
 import { fetchNowPlayingMovies, fetchPopularMovies, fetchTopRatedMovies, fetchTrendingMovies, fetchUpcomingMovies } from '../api/moviesdb'
 import 'react-native-gesture-handler';
+import { fetchAiringTodayTV, fetchOnTheAirTV, fetchPopularTV, fetchTopRatedTV } from '../api/tv'
 
 
 const ios = Platform.OS == 'ios';
 
 export default function HomeScreen() {
 
+    // movie states
     const [trending, setTrending] = useState([]);
-    const [nowPlaying, setNowPlaying] = useState([]);
-    const [upcoming, setUpcoming] = useState([]);
-    const [topRated, setTopRated] = useState([]);
-    const [popular, setPopular] = useState([]);
+    const [nowPlayingMovies, setNowPlayingMovies] = useState([]);
+    const [upcomingMovies, SetUpcomingMovies] = useState([]);
+    const [topRatedMovies, setTopRatedMovies] = useState([]);
+    const [popularMovies, setPopularMovies] = useState([]);
+
+    // tv series states
+    const [airingTV, setAiringTV] = useState([]);
+    const [onTheAirTV, setOnTheAirTV] = useState([]);
+    const [topRatedTV, setTopRatedTV] = useState([]);
+    const [popularTV, setPopularTV] = useState([]);
+
+
     const navigation = useNavigation();
     const [loading, setLoading] = useState(true);
 
@@ -30,6 +40,11 @@ export default function HomeScreen() {
             getUpcomingMovies();
             getTopRatedMovies();
             getPopularMovies();
+
+            getAiringTV();
+            getOnTheAirTV();
+            getTopRatedTV();
+            getPopularTV();
         }, 1000);
     }, [])
     
@@ -42,25 +57,50 @@ export default function HomeScreen() {
     const getNowPlayingMovies=async()=>{
         const data = await fetchNowPlayingMovies(1);
         if( data && data.results )
-            setNowPlaying(data.results);
+            setNowPlayingMovies(data.results);
         setLoading(false);
     }
     const getUpcomingMovies=async()=>{
         const data = await fetchUpcomingMovies(1);
         if(data && data.results )
-            setUpcoming(data.results);
+            SetUpcomingMovies(data.results);
         setLoading(false);
     }
     const getTopRatedMovies=async()=>{
         const data = await fetchTopRatedMovies(1);
         if(data && data.results )
-            setTopRated(data.results);
+            setTopRatedMovies(data.results);
         setLoading(false);
     }
     const getPopularMovies=async()=>{
         const data = await fetchPopularMovies(1);
         if(data && data.results )
-            setPopular(data.results);
+            setPopularMovies(data.results);
+        setLoading(false);
+    }
+
+    const getAiringTV=async()=>{
+        const data = await fetchAiringTodayTV(1);
+        if( data && data.results )
+            setAiringTV(data.results);
+        setLoading(false);
+    }
+    const getOnTheAirTV=async()=>{
+        const data = await fetchOnTheAirTV(1);
+        if( data && data.results )
+            setOnTheAirTV(data.results);
+        setLoading(false);
+    }
+    const getTopRatedTV=async()=>{
+        const data = await fetchTopRatedTV();
+        if( data && data.results )
+            setTopRatedTV(data.results);
+        setLoading(false);
+    }
+    const getPopularTV=async()=>{
+        const data = await fetchPopularTV();
+        if( data && data.results )
+            setPopularTV(data.results);
         setLoading(false);
     }
 
@@ -72,8 +112,6 @@ export default function HomeScreen() {
             <View className='flex-row justify-between items-center mx-4'>
                 <TouchableOpacity onPress={()=>navigation.openDrawer()}>
                     <Bars3CenterLeftIcon size={'30'} strokeWidth={2} color={'white'}/>
-                    
-                    {/* <Drawer.Screen name="Article" component={Article} /> */}
                 </TouchableOpacity>
                 <Text className='text-white text-3xl font-bold'>
                     <Text style={styles.text}>M</Text>ovies
@@ -93,11 +131,17 @@ export default function HomeScreen() {
                 contentContainerStyle={{paddingBottom: 10}}
             >   
                 { trending.length > 0 && <TrendingMovies data={trending} />}
+                {/*  movies  */}
+                {upcomingMovies.length > 0 && <MovieList title="Upcoming Movies" data={upcomingMovies} />}
+                {nowPlayingMovies.length > 0 && <MovieList title="Now Playing Movies" data={nowPlayingMovies} />}
+                {topRatedMovies.length > 0 && <MovieList title="Top Rated Movies" data={topRatedMovies} />}
+                {popularMovies.length > 0 && <MovieList title="Popular Movies" data={popularMovies} />}
 
-                {upcoming.length > 0 && <MovieList title="Upcoming" data={upcoming} />}
-                {nowPlaying.length > 0 && <MovieList title="Now Playing" data={nowPlaying} />}
-                {topRated.length > 0 && <MovieList title="Top Rated" data={topRated} />}
-                {popular.length > 0 && <MovieList title="Popular" data={popular} />}
+                {/*  tv  */}
+                {airingTV.length > 0 && <MovieList title="Airing Today TV" data={airingTV} />}
+                {onTheAirTV.length > 0 && <MovieList title="On The Air TV" data={onTheAirTV} />}
+                {topRatedTV.length > 0 && <MovieList title="Top Rated TV" data={topRatedTV} />}
+                {popularTV.length > 0 && <MovieList title="Popular TV" data={popularTV} />}
             </ScrollView>
             )
         }

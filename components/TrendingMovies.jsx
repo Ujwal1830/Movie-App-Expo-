@@ -13,18 +13,17 @@ export default function TrendingMovies({ data }) {
         navigator.navigate("Movie", item);
     }
 
-    console.log(data);
-
   return (
-    <View className='mb-8'>
+    <View className='my-4'>
       <Text className='text-white text-xl mx-4 mb-5'>Trending</Text>
       <Carousel 
         data={data}
         renderItem={({item, index})=><MovieCard item={item} handleClick={handleClick} />}
         firstItem={1}
-        inactiveSlideOpacity={0.62}
+        inactiveSlideOpacity={0.4}
+        inactiveSlideScale={0.7}
         sliderWidth={width}
-        itemWidth={width*0.6}
+        itemWidth={width*0.55}
         slideStyle={{display: 'flex', alignItems: 'center'}}
       />
     </View>
