@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "expo-movie-app",
-    "slug": "expo-movie-app",
+    "name": "Movie App",
+    "slug": "movie-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -25,6 +25,17 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "1354e702-d913-43b5-bf1c-62124c74733b"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/1354e702-d913-43b5-bf1c-62124c74733b"
     }
   }
 }
