@@ -21,13 +21,15 @@ export default function PersonScreen() {
     const navigator = useNavigation();
     const [isFav, setIsFav] = useState(false);
     const [personMovies, setPersonMovies] = useState([]);
+    const [personTv, setPersonTv] = useState([]);
     const [person, setPerson] = useState({});
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         getPersonDetails(item.id);
         getPersonMovies(item.id);
-    }, [item])
+        getPersonTV(item.id);
+    }, [item.id])
     
     const getPersonDetails=async(id)=>{
         const data = await fetchPersonDetails(id);
@@ -37,6 +39,11 @@ export default function PersonScreen() {
     const getPersonMovies=async(id)=>{
         const data = await fetchPersonMovies(id);
         if(data && data.cast) setPersonMovies(data.cast);
+        setLoading(false);
+    }
+    const getPersonTV=async(id)=>{
+        const data = await fetchPersonMovies(id);
+        if(data && data.cast) setPersonTv(data.cast);
         setLoading(false);
     }
 
@@ -65,7 +72,7 @@ export default function PersonScreen() {
                     }}
                 >
                     <View className='items-center rounded-full overflow-hidden h-72 w-72 border-2 border-black'>
-                        <Image source={{uri: image342(person.profile_path) || fallbackPersonImage}} 
+                        <Image source={{uri: image342(person?.profile_path) || fallbackPersonImage}} 
                             style={{height: height*0.43, width: width*0.74}}
                         />
                     </View>
@@ -104,7 +111,8 @@ export default function PersonScreen() {
                 </View>
 
                 {/* movie list  for above celebrity */}
-                <MovieList title={"Movies"} hideSeeAll={true} data={personMovies} />
+                {personMovies.length>0 && <MovieList path="Movie" title={"Movies"} hideSeeAll={true} data={personMovies} />}
+                {/* {personTv.length>0 && <MovieList path="TV" title={"TV"} hideSeeAll={true} data={personTv} />} */}
             </View>
             )
         }

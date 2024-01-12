@@ -7,6 +7,7 @@ import { fallbackMoviePoster, fetchGenreMovies, image185 } from '../api/moviesdb
 import {useNavigation} from '@react-navigation/native';
 import {ChevronLeftIcon} from 'react-native-heroicons/outline'
 import { FlatList } from 'react-native';
+import { fetchGenreTVPageNo } from '../api/tv';
 
 
 const {width, height} = Dimensions.get('window');
@@ -38,7 +39,7 @@ export default function MoviesPageScreen() {
     const handlePageNo = async (pageNo) => {
         console.log(pageNo);
         try {
-            const response = await fetchGenreMovies(title, pageNo);
+            const response = await fetchGenreTVPageNo(title, pageNo);
             setData(response);
             setLoading(false);
             ScrollToTheTop.current?.scrollTo({
@@ -91,6 +92,9 @@ export default function MoviesPageScreen() {
                                                 <View className="w-full pb-5 pt-2 px-1 flex-col items-center absolute bottom-0 bg-slate-950/80">
                                                     <Text className="text-neutral-300 ml-1 text-base text-center">
                                                         {item?.title?.length>22 ? item?.title+"...": item?.title}
+                                                    </Text>
+                                                    <Text className="text-neutral-300 ml-1 text-base text-center">
+                                                        {item?.name?.length>22 ? item?.name+"...": item.name}
                                                     </Text>
                                                     <Text className="text-yellow-600 ml-1 pr-1 text-xl">
                                                         {item?.vote_average?.toFixed(1)}

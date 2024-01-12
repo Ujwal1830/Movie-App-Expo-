@@ -132,16 +132,16 @@ export default function HomeScreen() {
             >   
                 { trending.length > 0 && <TrendingMovies data={trending} />}
                 {/*  movies  */}
-                {upcomingMovies.length > 0 && <MovieList title="Upcoming Movies" data={upcomingMovies} />}
-                {nowPlayingMovies.length > 0 && <MovieList title="Now Playing Movies" data={nowPlayingMovies} />}
-                {topRatedMovies.length > 0 && <MovieList title="Top Rated Movies" data={topRatedMovies} />}
-                {popularMovies.length > 0 && <MovieList title="Popular Movies" data={popularMovies} />}
+                {upcomingMovies.length > 0 && <MovieList path="Movie" title="Upcoming Movies" data={upcomingMovies} />}
+                {nowPlayingMovies.length > 0 && <MovieList path="Movie" title="Now Playing Movies" data={nowPlayingMovies} />}
+                {topRatedMovies.length > 0 && <MovieList path="Movie" title="Top Rated Movies" data={topRatedMovies} />}
+                {popularMovies.length > 0 && <MovieList path="Movie" title="Popular Movies" data={popularMovies} />}
 
                 {/*  tv  */}
-                {airingTV.length > 0 && <MovieList title="Airing Today TV" data={airingTV} />}
-                {onTheAirTV.length > 0 && <MovieList title="On The Air TV" data={onTheAirTV} />}
-                {topRatedTV.length > 0 && <MovieList title="Top Rated TV" data={topRatedTV} />}
-                {popularTV.length > 0 && <MovieList title="Popular TV" data={popularTV} />}
+                {airingTV.length > 0 && <MovieList path="TV" title="Airing Today TV" data={airingTV} />}
+                {onTheAirTV.length > 0 && <MovieList path="TV" title="On The Air TV" data={onTheAirTV} />}
+                {topRatedTV.length > 0 && <MovieList path="TV" title="Top Rated TV" data={topRatedTV} />}
+                {popularTV.length > 0 && <MovieList path="TV" title="Popular TV" data={popularTV} />}
             </ScrollView>
             )
         }

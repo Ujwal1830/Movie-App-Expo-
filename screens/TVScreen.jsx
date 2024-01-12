@@ -100,7 +100,7 @@ export default function TVScreen() {
         {
           tv?.id ? (
             <Text className='text-neutral-400 font-semibold text-base text-center'>
-                {tv?.status} • {tv?.first_air_date?.split('-')[0]} • {tv?.number_of_seasons}
+                {tv?.status} • {tv?.first_air_date?.split('-')[0]} • {tv?.number_of_seasons} seasons
             </Text>
           ) : null
         }

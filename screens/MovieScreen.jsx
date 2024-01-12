@@ -96,7 +96,7 @@ export default function MovieScreen() {
         {
           movie?.id ? (
             <Text className='text-neutral-400 font-semibold text-base text-center'>
-                {movie?.status} • {movie?.release_date?.split('-')[0]} • {movie?.runtime}
+                {movie?.status} • {movie?.release_date?.split('-')[0]} • {movie?.runtime} hrs
             </Text>
           ) : null
         }
